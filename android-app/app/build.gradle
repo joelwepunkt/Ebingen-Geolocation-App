@@ -19,8 +19,11 @@ android {
     }
 }
 
-repositories {
-    google()
+allprojects {
+    repositories {
+        google()
+        maven { url 'https://jitpack.io' }
+    }
 }
 
 dependencies {
@@ -32,4 +35,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.github.MikeOrtiz:TouchImageView:2.3.0'
 }

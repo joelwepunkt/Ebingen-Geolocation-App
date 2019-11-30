@@ -13,13 +13,14 @@ import android.widget.TextView;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.ortiz.touchview.TouchImageView;
 
 public class MainActivity extends AppCompatActivity {
 
     private int PERM_REQUEST_CODE = 69;
 
-    private FusedLocationProviderClient fusedLocationClient;
     private TextView gpsCoordinates;
+    private TouchImageView ebingenMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         checkPermission();
 
         gpsCoordinates = findViewById(R.id.gps_coordinates);
+        ebingenMap = findViewById(R.id.ebingen_map);
     }
 
     @Override
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void retrieveGpsData() {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {

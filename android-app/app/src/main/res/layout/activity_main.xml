@@ -10,7 +10,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -18,9 +18,15 @@
             android:id="@+id/gps_coordinates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_margin="10dp"
+            android:layout_marginTop="5dp"
             android:text="coordinates" />
+
+        <com.ortiz.touchview.TouchImageView
+            android:id="@+id/ebingen_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ebingen_map" />
     </LinearLayout>
 
 
