@@ -312,3 +312,5 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.gitignore.io/api/java,gradle,eclipse,android,androidstudio,visualstudiocode
+.vscode/launch.json
+.vscode/settings.json

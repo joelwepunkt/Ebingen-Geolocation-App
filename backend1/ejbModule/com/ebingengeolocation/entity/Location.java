@@ -64,6 +64,9 @@ public class Location implements java.io.Serializable {
 		this.description = description;
 		this.address = address;
 	}
+	public Location() {
+		
+	}
 
 	@Override
 	public String toString() {
