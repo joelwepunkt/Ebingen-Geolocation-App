@@ -37,6 +37,7 @@ public class LocationManager implements LocationManagerInterface, java.io.Serial
 		Location obj = em.find(Location.class, locationId);
 		if (obj == null) {
 			throw new NoSuchLocation();
+
 		} else
 			return obj;
 	}
@@ -56,6 +57,7 @@ public class LocationManager implements LocationManagerInterface, java.io.Serial
 		else
 			throw new NoSuchLocation();
 	}
+
 
 	@Override
 	public void checkout() {

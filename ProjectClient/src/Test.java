@@ -8,7 +8,9 @@ import javax.naming.NamingException;
 import com.ebingengeolocation.entity.*;
 import com.ebingengeolocation.session.LocationManager;
 import com.ebingengeolocation.session.LocationManagerInterface;
+
 import com.ebingengeolocation.session.NoSuchLocation;
+
 import com.ebingengeolocation.*;
 
 public class Test {
@@ -29,10 +31,12 @@ public class Test {
 			ctx = new InitialContext();
 			m = (LocationManagerInterface) ctx.lookup(LOOKUP_NAME);
 // /////////////////////////
+
 			System.out.println("m.list() = " + m.list());
 			System.out.println("m.findByLocationId(1) = " + m.findByLocationId(1));
 		} catch (NoSuchLocation e) {
 			e.printStackTrace();
+
 		}
 		finally {}
 	}
