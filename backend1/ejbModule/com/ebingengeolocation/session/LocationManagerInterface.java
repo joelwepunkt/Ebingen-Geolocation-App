@@ -12,11 +12,11 @@ public interface LocationManagerInterface {
 
 	public Collection<Location> list();
 
-	public Location findByPrimaryKey(int primaryKey) throws NoSuchRowException;
+	public Location findByLocationId(int locationId) throws NoSuchLocation;
 
-	// public void delete(int primaryKey) throws NoSuchRowException;
+	public void delete(int primaryKey) throws NoSuchLocation;
 
-	// public void save(Location arg);
+	public void save(Location arg);
 
 	@Remove
 	void checkout();
