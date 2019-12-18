@@ -57,6 +57,10 @@ public class LocationManager implements LocationManagerInterface, java.io.Serial
 		else
 			throw new NoSuchLocation();
 	}
+	
+	public Collection<Location> getNearLocation() {
+		return null;
+	}
 
 
 	@Override
