@@ -8,6 +8,8 @@ insert into location(locationid, shapes, title, description, address)
 commit;
 select * from location;
 
+SELECT * from location l where SDO_CONTAINS(l.SHAPES, SDO_GEOMETRY(2001,null, SDO_POINT_TYPE(7,7, null), null, null)) = 'TRUE';
+
 INSERT INTO cola_markets VALUES(
   0,
   'cola_x',
