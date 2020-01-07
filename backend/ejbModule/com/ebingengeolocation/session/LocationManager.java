@@ -58,9 +58,10 @@ public class LocationManager implements LocationManagerInterface, java.io.Serial
 			throw new NoSuchLocation();
 	}
 	
-	public Collection<Location> getNearLocation() {
-		return null;
-	}
+	public Collection<Location> getNearLocation(float x, float y) {
+		return em.createQuery("select o from Location l where SDO_CONTAINS(l.SHAPES, SDO_GEOMETRY(2001,null, SDO_POINT_TYPE(" + x + "," + y+ ", null), null, null)) = 'TRUE'", Location.class).getResultList;
+		//return em.createQuery("select o from Location l where SDO_CONTAINS(l.SHAPES, SDO_ANYINTERACT(l.SHAPES, SDO_GEOMETRY(2003,null, null, SDO_ELEM_INFO_ARRAY(1, 1003, 4), SDO_ORDINATE_ARRAY(" + x + "+3," + y +", " + x + "," + y + "+3, " + x + "-3," + y + "))) = 'TRUE'", Location.class).getResultList;
+		}
 
 
 	@Override
