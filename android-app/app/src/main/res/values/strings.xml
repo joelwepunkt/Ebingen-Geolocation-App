@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Ebingen Geolocation</string>
+    <string name="title_activity_maps">Ebingen Geolocation</string>
 </resources>

@@ -1,3 +1,5 @@
+
+
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import com.ebingengeolocation.session.NoSuchLocation;
 import com.ebingengeolocation.*;
 
 public class Test {
-	public final static String MODULE_NAME = "backend1"; // = Name des
+	public final static String MODULE_NAME = "backend"; // = Name des
 	// EJB-Jar-File
 	public final static String BEAN_NAME = "LocationManager";
 	public final static String INTERFACE_NAME = "com.ebingengeolocation.session.LocationManagerInterface";
@@ -24,7 +26,7 @@ public class Test {
 // neue Aufruf-Syntax: <jar-file-name>/<bean-name>!<interface-name>
 // /////////////////////////
 
-	public static void main(String[] args) throws NamingException, NoSuchRowException {
+	public static void main(String[] args) throws NamingException {
 		InitialContext ctx = null;
 		LocationManagerInterface m = null;
 		try {
