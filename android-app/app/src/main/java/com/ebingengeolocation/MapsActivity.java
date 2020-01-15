@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -27,16 +28,20 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.concurrent.TimeUnit;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
     private int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 50;
     private int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 51;
     private boolean mLocationPermissionGranted;
+
+    private Intent mapDetailIntent;
 
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationCallback mLocationCallback;
@@ -46,6 +51,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        mapDetailIntent = new Intent(this, MarkerDetail.class);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -60,6 +67,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getLocationPermission();
 
         mMap.setMyLocationEnabled(true);
+        mMap.setOnMarkerClickListener(this);
 
         createLocationRequest();
         createLocationCallback();
@@ -124,6 +132,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onResponse(String response) {
                         MarkerOptions markerOptions = new MarkerOptions();
                         markerOptions.title("test");
+                        markerOptions.position(new LatLng(48.211582, 9.027737));
                         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
 
                         mMap.addMarker(markerOptions);
@@ -136,5 +145,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         queue.add(stringRequest);
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        this.startActivity(mapDetailIntent);
+
+        return false;
     }
 }
