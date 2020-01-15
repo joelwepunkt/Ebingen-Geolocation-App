@@ -9,20 +9,27 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.concurrent.TimeUnit;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -31,14 +38,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 51;
     private boolean mLocationPermissionGranted;
 
-    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private LocationCallback mLocationCallback;
+    private LocationRequest mLocationRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -52,13 +61,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.setMyLocationEnabled(true);
 
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(new LatLng(-44, 113));
-        markerOptions.title("test");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-
-        Marker marker = mMap.addMarker(markerOptions);
-//        getDeviceLocation();
+        createLocationRequest();
+        createLocationCallback();
+        startPeriodicLocationUpdate();
     }
 
     @Override
@@ -89,29 +94,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private void getDeviceLocation() {
-        try {
-            if (mLocationPermissionGranted) {
+    private void createLocationRequest() {
+        mLocationRequest = new LocationRequest()
+                .setInterval(TimeUnit.SECONDS.toMillis(5))
+                .setFastestInterval(TimeUnit.SECONDS.toMillis(5))
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
 
-                mFusedLocationProviderClient.getLastLocation()
-                        .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                            @Override
-                            public void onSuccess(Location location) {
-                                if (location != null) {
-                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                            new LatLng(location.getLatitude(), location.getLongitude()), 0));
-                                } else {
-                                    mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds(
-                                            new LatLng(-44, 113), new LatLng(-10, 154)), 0));
-                                    mMap.getUiSettings().setMyLocationButtonEnabled(false);
-                                }
-                            }
-                        });
-            } else {
-                getLocationPermission();
+    private void createLocationCallback() {
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                GetLocationMarker(locationResult.getLastLocation());
             }
-        } catch (SecurityException e) {
-            Log.e("Exception: %s", e.getMessage());
-        }
+        };
+    }
+
+    private void startPeriodicLocationUpdate() {
+        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+    }
+
+    public void GetLocationMarker(final Location currentLocation) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://www.dummy.com/" + currentLocation.getLatitude() + "/" + currentLocation.getLongitude();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.title("test");
+                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+
+                        mMap.addMarker(markerOptions);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Exception: %s", error.getMessage());
+            }
+        });
+
+        queue.add(stringRequest);
     }
 }
