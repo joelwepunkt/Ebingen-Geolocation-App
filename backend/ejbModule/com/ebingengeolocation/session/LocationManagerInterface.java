@@ -5,6 +5,9 @@ import java.util.Collection;
 import javax.ejb.Remote;
 import javax.ejb.Remove;
 
+import org.json.*;
+import org.wildfly.security.json.*;
+
 import com.ebingengeolocation.entity.*;
 
 @Remote
@@ -14,7 +17,7 @@ public interface LocationManagerInterface {
 
 	public Location findByLocationId(int locationId) throws NoSuchLocation;
 
-	public Collection<Location> getNearLocation(float x, float y);
+	public JSONArray getNearLocation(double x, double y);
 
 	public void delete(int primaryKey) throws NoSuchLocation;
 

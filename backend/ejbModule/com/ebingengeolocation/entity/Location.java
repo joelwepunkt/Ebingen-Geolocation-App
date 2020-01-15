@@ -12,6 +12,12 @@ public class Location implements java.io.Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "locationKeyGenerator")
 	@Column(name = "locationID")
 	private int locationId;
+	
+	@Column(name = "lon")
+	private double lon;
+	
+	@Column(name = "lat")
+	private double lat;
 
 	@Column(name = "title")
 	private String title;
@@ -28,6 +34,22 @@ public class Location implements java.io.Serializable {
 
 	public void setLocationId(int locationId) {
 		this.locationId = locationId;
+	}
+	
+	public double getLon() {
+		return lon;
+	}
+	
+	public void setLon(double lon) {
+		this.lon = lon;
+	}
+	
+	public double getLat() {
+		return lat;
+	}
+	
+	public void setLat(double lat) {
+		this.lat = lat;
 	}
 
 	public String getTitle() {
@@ -58,8 +80,10 @@ public class Location implements java.io.Serializable {
 		return serialVersionUID;
 	}
 
-	public Location(int locationId, String title, String description, String address) {
+	public Location(int locationId, double lon, double lat, String title, String description, String address) {
 		this.locationId = locationId;
+		this.lon = lon;
+		this.lat = lat;
 		this.title = title;
 		this.description = description;
 		this.address = address;
@@ -70,7 +94,7 @@ public class Location implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Location [locationId=" + locationId + ", title=" + title + ", description=" + description + ", address="
+		return "Location [locationId=" + locationId + ", longitude=" + lon + ", latitude=" + lat + ", title=" + title + ", description=" + description + ", address="
 				+ address + "]";
 	}
 }
