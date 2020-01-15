@@ -41,7 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 51;
     private boolean mLocationPermissionGranted;
 
-    private Intent mapDetailIntent;
+    private Intent markerDetailIntent;
 
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationCallback mLocationCallback;
@@ -52,7 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        mapDetailIntent = new Intent(this, MarkerDetail.class);
+        markerDetailIntent = new Intent(this, MarkerDetail.class);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -69,6 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         mMap.setOnMarkerClickListener(this);
 
+//        this.startActivity(markerDetailIntent);
         createLocationRequest();
         createLocationCallback();
         startPeriodicLocationUpdate();
@@ -149,7 +150,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        this.startActivity(mapDetailIntent);
+        this.startActivity(markerDetailIntent);
 
         return false;
     }
