@@ -15,7 +15,7 @@ public interface LocationManagerInterface {
 	public Location findByLocationId(int locationId) throws NoSuchLocation;
 
 	public String getNearLocation(double x, double y) throws NoSuchLocation;
-	
+
 	public void delete(int primaryKey) throws NoSuchLocation;
 
 	public void save(Location arg);
