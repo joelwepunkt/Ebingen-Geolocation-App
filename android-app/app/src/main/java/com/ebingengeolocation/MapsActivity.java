@@ -24,6 +24,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -64,10 +65,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(50.910775, 10.255989), 6));
         getLocationPermission();
 
         mMap.setMyLocationEnabled(true);
         mMap.setOnMarkerClickListener(this);
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.title("test");
+        markerOptions.position(new LatLng(48.211582, 9.027737));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+
+        mMap.addMarker(markerOptions);
 
 //        this.startActivity(markerDetailIntent);
         createLocationRequest();
