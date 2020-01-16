@@ -15,10 +15,10 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:gravity="center_horizontal"
             android:textColor="@android:color/black"
-            android:textSize="30sp"
-            android:layout_marginBottom="10dp"/>
+            android:textSize="30sp" />
 
         <fragment
             android:id="@+id/map"
@@ -58,14 +58,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:hint="Write a comment" />
+            android:hint="Write a comment"
+            android:inputType="textShortMessage"
+            android:onClick="addComment" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
-            android:text="Send"
-            android:onClick="addComment"/>
+            android:onClick="addComment"
+            android:text="Send" />
     </LinearLayout>
 </ScrollView>

@@ -37,6 +37,7 @@ public class MarkerDetail extends AppCompatActivity implements OnMapReadyCallbac
     private EditText commentInput;
 
     private ArrayList<String> commentsList;
+    ArrayAdapter<String> commentsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class MarkerDetail extends AppCompatActivity implements OnMapReadyCallbac
 
         commentsList = new ArrayList<>();
 
-        ArrayAdapter<String> commentsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, commentsList);
+        commentsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, commentsList);
 
         comments.setAdapter(commentsAdapter);
 
@@ -114,5 +115,7 @@ public class MarkerDetail extends AppCompatActivity implements OnMapReadyCallbac
         commentsList.add(commentInput.getText().toString());
 
         commentInput.setText("");
+
+        commentsAdapter.notifyDataSetChanged();
     }
 }
