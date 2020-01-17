@@ -46,10 +46,13 @@ public class NoteManager implements NoteManagerInterface, java.io.Serializable{
 	
 	public void save(Note arg) {
 		Note note = em.find(Note.class, arg.getNoteid());
-		if (note == null)
+		if (note == null) {
+			System.out.println("Save new Note");
 			em.persist(arg);
-		else
+		} else {
+			System.out.println("Save old Note");
 			em.merge(arg);
+		}
 	}
 	
 	public void delete(int primaryKey) throws NoSuchNote {
@@ -75,13 +78,6 @@ public class NoteManager implements NoteManagerInterface, java.io.Serializable{
 		}
 		System.out.println(notes.toString());
 		return notes.toString();
-	}
-	
-	public void setNote(int locationid, String commentary) {
-		Query query = em.createQuery("insert into note values note_sequence.nextval, ?1, ?2");
-		query.setParameter(1, locationid);
-		query.setParameter(2, commentary);
-		query.executeUpdate();
 	}
 	
 	@Override

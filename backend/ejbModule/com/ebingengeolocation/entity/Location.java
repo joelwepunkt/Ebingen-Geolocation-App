@@ -80,8 +80,7 @@ public class Location implements java.io.Serializable {
 		return serialVersionUID;
 	}
 
-	public Location(int locationId, double lon, double lat, String title, String description, String address) {
-		this.locationId = locationId;
+	public Location(double lon, double lat, String title, String description, String address) {
 		this.lon = lon;
 		this.lat = lat;
 		this.title = title;
