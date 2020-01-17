@@ -12,9 +12,7 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import org.json.*;
-//import com.google.gson.*;
 
 import com.ebingengeolocation.entity.*;
 
@@ -33,9 +31,11 @@ public class LocationManager implements LocationManagerInterface, java.io.Serial
 	public LocationManager() {
 	}
 
+
 	public Collection<Location> list() {
 		return em.createQuery("select l from Location l").getResultList();
 	}
+
 
 	public Location findByLocationId(int locationId) throws NoSuchLocation {
 		System.out.println("LocationManager.findByLocationId :: locationId = " + locationId);
@@ -63,7 +63,7 @@ public class LocationManager implements LocationManagerInterface, java.io.Serial
 			throw new NoSuchLocation();
 	}
 	
-	public JSONArray getNearLocation(double x, double y) {
+	public String getNearLocation(double x, double y) {
 		Query query = em.createQuery("select l from Location l " 
 				+ "where (sqrt(power(lon-?1, 2) + power(lat-?2, 2)) <= 0.005)", Location.class);
 		query.setParameter(1, x);
@@ -82,7 +82,7 @@ public class LocationManager implements LocationManagerInterface, java.io.Serial
 		}
 
 		System.out.println(nearLocation.toString());
-		return nearLocation;
+		return nearLocation.toString();
 	}
 
 

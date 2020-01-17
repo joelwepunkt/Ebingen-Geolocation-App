@@ -19,6 +19,7 @@ insert into LOCATION VALUES (location_sequence.nextval,
             'Müller Drogeriemarkt',
             '',
             'Kirchengraben 38-42');
+
 INSERT INTO LOCATION VALUES (location_sequence.nextval,
             48.212466,
             9.028437,
@@ -27,4 +28,33 @@ INSERT INTO LOCATION VALUES (location_sequence.nextval,
             'Untere Vorstadt 6');
 
 commit;
+
+INSERT INTO NOTE VALUES (note_sequence.nextval,
+            1,
+            'Die Hochschule ist sehr schön');
+
+INSERT INTO NOTE VALUES (note_sequence.nextval,
+            1,
+            'Die Hochschule ist ...');
+
+INSERT INTO NOTE VALUES (note_sequence.nextval,
+            1,
+            'Die Hochschule ...');
+
+INSERT INTO NOTE VALUES (note_sequence.nextval,
+            2,
+            'Bahnhof');
+
+INSERT INTO NOTE VALUES (note_sequence.nextval,
+            3,
+            'Müller');
+
+INSERT INTO NOTE VALUES (note_sequence.nextval,
+            4,
+            'Star Kebap');
+
+commit;
+
 select * from location;
+
+select * from note;
