@@ -15,8 +15,6 @@ public interface NoteManagerInterface {
 	public Note findByNoteId(int noteId) throws NoSuchNote;
 	
 	public String getNote(int locationid) throws NoSuchNote;
-	
-	public void setNote(int locationid, String commentary) throws NoSuchNote;
 
 	public void delete(int primaryKey) throws NoSuchNote;
 

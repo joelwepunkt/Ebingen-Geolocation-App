@@ -13,6 +13,7 @@ import com.ebingengeolocation.session.LocationManager;
 import com.ebingengeolocation.session.LocationManagerInterface;
 
 import com.ebingengeolocation.session.NoSuchLocation;
+import com.ebingengeolocation.session.NoSuchNote;
 import com.ebingengeolocation.session.NoteManagerInterface;
 import com.ebingengeolocation.*;
 
@@ -30,7 +31,7 @@ public class Test {
 	
 	
 
-	public static void main(String[] args) throws NamingException {
+	public static void main(String[] args) throws NamingException, NoSuchNote, NoSuchLocation {
 		InitialContext ctx1 = null;
 		InitialContext ctx2 = null;
 		LocationManagerInterface m = null;
@@ -48,9 +49,15 @@ public class Test {
 			System.out.println("m.getNearLocation(48.210483, 9.030926) = " + m.getNearLocation(48.210483, 9.030926));
 			System.out.println("n.list() = " + n.list());
 			System.out.println("n.getNote(1) = " + n.getNote(1));
+			n.save(new Note(1,"Hallo"));
+			m.save(new Location(1, 1, "Test", "Teest", "test"));
+			n.delete(-42);
+			m.delete(-44);
 		} catch (NoSuchLocation e) {
 			e.printStackTrace();
 
+		} catch (NoSuchNote e) {
+			e.printStackTrace();
 		}
 		finally {}
 	}

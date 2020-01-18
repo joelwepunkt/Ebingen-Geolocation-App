@@ -9,8 +9,10 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.ebingengeolocation.entity.Location;
+import com.ebingengeolocation.entity.Note;
 import com.ebingengeolocation.session.LocationManagerInterface;
 import com.ebingengeolocation.session.NoSuchLocation;
 import com.ebingengeolocation.session.NoSuchNote;
@@ -47,6 +49,28 @@ public class Service implements java.io.Serializable {
 	}
 	
 	@GET
+	@Path("/listLocation")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String listLocation() throws NoSuchLocation {
+		try {
+			return locationInterface.list().toString();
+		} catch (Exception e){
+			throw new NoSuchLocation();
+		}
+	}
+	
+	@GET
+	@Path("/listComment")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String listNote() throws NoSuchLocation {
+		try {
+			return noteInterface.list().toString();
+		} catch (Exception e){
+			throw new NoSuchLocation();
+		}
+	}
+	
+	@GET
 	@Path("/nearLoc/{x},{y}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getNearLocation(@PathParam("x") double x, @PathParam("y") double y) throws NoSuchLocation {
@@ -69,12 +93,47 @@ public class Service implements java.io.Serializable {
 	}
 	
 	@POST
-	@Path("/postComment/{id}")
-	public void setNote(@PathParam("id") int locationid/*, @PathParam("comment") String commentary*/) throws NoSuchNote {
+	@Path("/saveComment")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void saveNote(JSONObject json) throws NoSuchNote {
+		System.out.println("LocationId = " + Integer.toString(json.getInt("locationid")) + ", Commentary = " + json.get("commentary"));
 		try {
-			noteInterface.setNote(locationid, "Kebap");
+			noteInterface.save(new Note(json.getInt("locationid"), json.getString("commentary")));
 		} catch (Exception e) {
 			throw new NoSuchNote();
+		}
+	}
+	
+	@POST
+	@Path("/saveLocation")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void saveLocation(JSONObject json) throws NoSuchLocation {
+		try {
+			locationInterface.save(new Location(json.getDouble("lon"), json.getDouble("lat"), json.getString("title"), json.getString("description"), json.getString("adress")));
+		} catch (Exception e) {
+			throw new NoSuchLocation();
+		}
+	}
+	
+	@POST
+	@Path("/deleteComment")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deleteNote(JSONObject json) throws NoSuchNote {
+		try {
+			noteInterface.delete(json.getInt("id"));
+		} catch (Exception e) {
+			throw new NoSuchNote();
+		}
+	}
+	
+	@POST
+	@Path("/deleteLocation")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deleteLocation(JSONObject json) throws NoSuchLocation {
+		try {
+			noteInterface.delete(json.getInt("id"));
+		} catch (Exception e) {
+			throw new NoSuchLocation();
 		}
 	}
 

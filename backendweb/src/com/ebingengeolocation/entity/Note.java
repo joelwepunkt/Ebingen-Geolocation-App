@@ -47,8 +47,7 @@ public class Note implements java.io.Serializable {
 		return serialVersionUID;
 	}
 	
-	public Note(int noteid, int locationid, String commentary) {
-		this.noteid = noteid;
+	public Note(int locationid, String commentary) {
 		this.locationid = locationid;
 		this.commentary = commentary;
 	}
